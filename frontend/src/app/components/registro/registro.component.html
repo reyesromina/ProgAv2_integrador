@@ -1,0 +1,118 @@
+<div class="min-vh-100">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+
+            <!-- Estado: Formulario de Registro -->
+            <div *ngIf="estado() === 'formulario'" class="fade-in">
+              <h2 class="card-title">Crear Cuenta</h2>
+              <p class="subtitle">Completa los campos para registrarte</p>
+
+              <form [formGroup]="formulario" (ngSubmit)="registrar()">
+                <!-- Email -->
+                <div class="mb-3">
+                  <label for="email" class="form-label">Correo Electrónico</label>
+                  <input
+                    type="email"
+                    id="email"
+                    class="form-control"
+                    [class.is-invalid]="tieneErrorEmail()"
+                    formControlName="email"
+                    placeholder="correo@ejemplo.com"
+                    [disabled]="cargando()"
+                  />
+                  <div class="invalid-feedback" *ngIf="tieneErrorEmail()">
+                    <span *ngIf="formulario.get('email')?.errors?.['required']">
+                      El correo es requerido
+                    </span>
+                    <span *ngIf="formulario.get('email')?.errors?.['email']">
+                      Ingresa un correo válido
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Contraseña -->
+                <div class="mb-4">
+                  <label for="password" class="form-label">Contraseña</label>
+                  <input
+                    type="password"
+                    id="password"
+                    class="form-control"
+                    [class.is-invalid]="tieneErrorPassword()"
+                    formControlName="password"
+                    placeholder="Ingresa tu contraseña"
+                    [disabled]="cargando()"
+                  />
+                  <div class="invalid-feedback" *ngIf="tieneErrorPassword()">
+                    <span *ngIf="formulario.get('password')?.errors?.['required']">
+                      La contraseña es requerida
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Botón Registrar -->
+                <button
+                  type="submit"
+                  class="btn btn-primary mb-3 btn-margin"
+                  [disabled]="cargando()"
+                >
+                  <span *ngIf="!cargando()">Registrarse</span>
+                  <span *ngIf="cargando()">
+                    <span class="spinner-border-sm"></span>
+                    Registrando...
+                  </span>
+                </button>
+              </form>
+
+              <!-- Enlace a Login -->
+              <p class="text-center text-muted small mt-4">
+                ¿Ya tienes cuenta?
+                <a href="/login/user">Inicia sesión aquí</a>
+              </p>
+            </div>
+
+            <!-- Nota: la verificación por código queda fuera de alcance según SPEC -->
+
+            <!-- Estado: Éxito -->
+            <div *ngIf="estado() === 'exito'" class="text-center fade-in">
+              <div class="success-icon">✓</div>
+              <h2 class="card-title mb-2">¡Registro Exitoso!</h2>
+              <p class="text-muted">
+                Tu cuenta fue creada correctamente.
+              </p>
+              <p class="text-muted small mt-2">
+                Puedes ir al login para iniciar sesión.
+              </p>
+           <!---   <button class="btn btn-primary mt-3" (click)="goToLogin()">
+                Ir al Login
+              </button> / -->
+            </div>
+
+            <!-- Estado: Error -->
+            <div *ngIf="estado() === 'error'" class="text-center fade-in">
+              <div class="alert alert-danger mb-4">
+                <strong>Error en el registro</strong>
+                <p class="mt-2">{{ mensajeError() }}</p>
+              </div>
+              <button
+                type="button"
+                class="btn btn-primary"
+                (click)="volverAlFormulario()"
+              >
+                Intentar de Nuevo
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer-text">
+          <p>Al registrarte aceptas nuestros términos y condiciones</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

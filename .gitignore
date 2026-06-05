@@ -1,0 +1,62 @@
+# ==========================================
+# ☕ CONFIGURACIÓN PARA EL BACKEND (Java / Maven)
+# ==========================================
+
+# Compilados e instalables de Java
+backend/*.class
+backend/*.bluej
+backend/*.pkg
+backend/*.ctxt
+backend/*/*.class
+
+# Carpeta de salida de Maven (¡Crucial no subir esto!)
+backend/target/
+backend/**/target/
+
+# Archivos temporales de aplicaciones y bases de datos incrustadas (H2)
+backend/*.log
+backend/*.db
+backend/db/
+
+# ==========================================
+# 💻 CONFIGURACIÓN PARA EL FRONTEND (Angular / Node)
+# ==========================================
+
+# Dependencias de Node (¡Pesa muchísimo, nunca se sube!)
+frontend/node_modules/
+frontend/**/node_modules/
+
+# Carpetas de caché y compilación de Angular
+frontend/.angular/
+frontend/dist/
+frontend/tmp/
+frontend/out-tsc/
+frontend/bazel-out/
+
+# Log de errores de NPM
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+
+# ==========================================
+# 🛠️ CONFIGURACIÓN DEL EDITOR E IDEs (Compartido)
+# ==========================================
+
+# IntelliJ (Usado comúnmente para Java)
+.idea/
+*.iml
+*.iws
+*.ipr
+backend/.idea/
+backend/*.iml
+
+# Visual Studio Code (Usado comúnmente para Angular)
+.vscode/
+frontend/.vscode/
+.history/
+
+# Archivos del Sistema Operativo
+Thumbs.db
+.DS_Store
+*.tmp
+*.bak
