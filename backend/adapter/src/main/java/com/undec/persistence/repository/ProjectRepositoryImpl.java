@@ -27,4 +27,9 @@ public class ProjectRepositoryImpl implements ProjectRepository {
         return ProjectMapper.mapToProjectDomain(projectData);
 
     }
+
+    @Override
+    public Project findProjectById(Long idProject) {
+        return null;
+    }
 }
