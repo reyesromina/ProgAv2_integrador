@@ -1,12 +1,11 @@
 package com.undec.web;
 
-import com.undec.controller.dto.OrderRequest;
-import com.undec.controller.dto.OrderResponse;
-import com.undec.controller.dto.UserRequest;
-import com.undec.controller.dto.UserResponse;
+import com.undec.controller.dto.*;
+import com.undec.persistence.repository.ProjectRepositoryImpl;
 import input.*;
 import input.dto.TokenResponse;
 import model.Order;
+import model.Project;
 import model.User;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -23,15 +22,17 @@ public class ControllerUser {
     private final GenerateUserActivityReportPDFInput generateUserActivityReportPDFInput;
     private final RegisterUserInput registerUserInput;
     private final LoginUserInput loginUserInput;
+    private final CreateProjectInput createProjectInput;
 
     public ControllerUser(CreateOrderInput createOrderInput, GetUserByIdInput getUserByIdInput, GenerateUserActivityReportPDFInput generateUserActivityReportPDFInput,
-                          RegisterUserInput registerUserInput, LoginUserInput loginUserInput) {
+                          RegisterUserInput registerUserInput, LoginUserInput loginUserInput,CreateProjectInput createProjectInput) {
 
         this.createOrderInput = createOrderInput;
         this.getUserByIdInput = getUserByIdInput;
         this.generateUserActivityReportPDFInput = generateUserActivityReportPDFInput;
         this.registerUserInput = registerUserInput;
         this.loginUserInput = loginUserInput;
+        this.createProjectInput=createProjectInput;
     }
 
     @PostMapping("/{id}/orders")
@@ -100,5 +101,16 @@ public class ControllerUser {
         }
     }
 
+    @PostMapping("/Project")
+    public ResponseEntity<?> createOrder(@RequestHeader("Authorization") String authorizationHeader,@RequestBody ProjectRequest request) {
+        try {
+            String token = authorizationHeader.replace("Bearer ", "");
+           Project newProject = createProjectInput.createProject(token,request.getName(),request.getDescription(),request.getProjectStatus());
+
+            return ResponseEntity.ok(ProjectResponse.fromDomainProject(newProject));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 
 }

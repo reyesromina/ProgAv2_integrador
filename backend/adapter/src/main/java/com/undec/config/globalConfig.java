@@ -40,4 +40,8 @@ public class globalConfig {
                                                                                  OrderRepository orderRepository,PdfGeneratorPort pdfGeneratorPort) {
         return new GenerateUserActivityReportPDFUseCase(userRepository, orderRepository, pdfGeneratorPort);
     }
+    @Bean
+    public CreateProjectInput createProjectInput(TokenService tokenService, UserRepository userRepository, ProjectRepository projectRepository) {
+        return new CreateProjectUseCase(tokenService, userRepository, projectRepository);
+    }
 }

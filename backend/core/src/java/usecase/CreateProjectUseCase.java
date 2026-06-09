@@ -26,13 +26,15 @@ public class CreateProjectUseCase implements CreateProjectInput {
     public Project createProject(String emailToken, String name, String description, ProjectStatus projectStatus) {
 
         String email=tokenService.extractEmail(emailToken);
+        System.out.println("EMAIL: " + email);
         User user=userRepository.findByEmail(email);
+        System.out.println("USER: " + user);
         if(user==null){
             throw new ResourceNotFoundException("User not found");
         }
 
         Project project = Project.newProject(name,projectStatus,description,user);
-
+        System.out.println("PROJECT USER: " + project.getUser());
       Project savedProject= projectRepository.saveProject(project);
         if (savedProject == null) {
             throw new ValidationException("User could not be saved");

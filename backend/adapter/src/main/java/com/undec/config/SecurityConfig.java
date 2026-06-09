@@ -18,7 +18,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/users/register").permitAll()
                         .requestMatchers("/users/login").permitAll()
-                        .anyRequest().authenticated()
+                        //modificar esta parte
+                        .anyRequest().permitAll()
                 );
 
         return http.build();
