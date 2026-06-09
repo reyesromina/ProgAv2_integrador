@@ -44,4 +44,8 @@ public class globalConfig {
     public CreateProjectInput createProjectInput(TokenService tokenService, UserRepository userRepository, ProjectRepository projectRepository) {
         return new CreateProjectUseCase(tokenService, userRepository, projectRepository);
     }
+    @Bean
+    public CreateTaskInput createTaskUseCase(Clock clock, ProjectRepository projectRepository , TaskRepository taskRepository) {
+        return new CreateTaskUseCase(clock,projectRepository,taskRepository);
+    }
 }

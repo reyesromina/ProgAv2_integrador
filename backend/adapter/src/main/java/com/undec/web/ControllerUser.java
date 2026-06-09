@@ -23,9 +23,10 @@ public class ControllerUser {
     private final RegisterUserInput registerUserInput;
     private final LoginUserInput loginUserInput;
     private final CreateProjectInput createProjectInput;
+    private final CreateTaskInput createTaskInput;
 
     public ControllerUser(CreateOrderInput createOrderInput, GetUserByIdInput getUserByIdInput, GenerateUserActivityReportPDFInput generateUserActivityReportPDFInput,
-                          RegisterUserInput registerUserInput, LoginUserInput loginUserInput,CreateProjectInput createProjectInput) {
+                          RegisterUserInput registerUserInput, LoginUserInput loginUserInput,CreateProjectInput createProjectInput,CreateTaskInput createTaskInput) {
 
         this.createOrderInput = createOrderInput;
         this.getUserByIdInput = getUserByIdInput;
@@ -33,6 +34,7 @@ public class ControllerUser {
         this.registerUserInput = registerUserInput;
         this.loginUserInput = loginUserInput;
         this.createProjectInput=createProjectInput;
+        this.createTaskInput=createTaskInput;
     }
 
     @PostMapping("/{id}/orders")
@@ -109,6 +111,22 @@ public class ControllerUser {
 
             return ResponseEntity.ok(ProjectResponse.fromDomainProject(newProject));
         } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/{projectId}/task")
+    public ResponseEntity<?> createTask(@RequestBody TaskRequest request,@PathVariable Long projectId) {
+        try {
+
+            var task = createTaskInput.createTask(
+                    projectId,
+                    request.getEstimateHours()
+                    , request.getStatus(),
+                    request.getFinishedAt(),
+                    request.getCreatedAt(), request.getTitle());
+            return ResponseEntity.ok(TaskResponse.fromDomainTask(task));
+        }catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

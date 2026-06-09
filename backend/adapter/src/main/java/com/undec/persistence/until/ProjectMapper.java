@@ -11,7 +11,7 @@ public class ProjectMapper {
         ProjectData  taskData = new ProjectData( UserMapper.mapToUserData(project.getUser()),
               project.getName(),project.getProjectStatus(),project.getDescription() );
 
-        if (project.getId() != null) {
+        if (project.getId()!= null) {
             taskData.setId(project.getId());
         }
         return taskData;
@@ -19,11 +19,17 @@ public class ProjectMapper {
 
     public static Project mapToProjectDomain(ProjectData project){
 
-        return Project.newProject(
+        Project taskDomain= Project.newProject(
                 project.getName(),
                 project.getProjectStatus(),
                 project.getDescription(),
                 UserMapper.mapToUserDomain(project.getUser()));
+        if (project.getId()!= null) {
+            taskDomain.setId(project.getId());
+        }
+
+
+        return taskDomain;
 
     }
 

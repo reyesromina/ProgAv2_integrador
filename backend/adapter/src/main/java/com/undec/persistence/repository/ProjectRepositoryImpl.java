@@ -30,6 +30,8 @@ public class ProjectRepositoryImpl implements ProjectRepository {
 
     @Override
     public Project findProjectById(Long idProject) {
-        return null;
+        return projectRepositoryCrud.findById(idProject)
+                .map(ProjectMapper::mapToProjectDomain)
+                .orElse(null);
     }
 }
