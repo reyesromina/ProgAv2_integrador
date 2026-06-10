@@ -6,6 +6,7 @@ import input.*;
 import input.dto.TokenResponse;
 import model.Order;
 import model.Project;
+import model.Task;
 import model.User;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -13,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.ResourceAccessException;
 import output.PdfGeneratorPort;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -24,9 +27,10 @@ public class ControllerUser {
     private final LoginUserInput loginUserInput;
     private final CreateProjectInput createProjectInput;
     private final CreateTaskInput createTaskInput;
+    private final GetTasksByProjectInput getTasksByProjectInput;
 
     public ControllerUser(CreateOrderInput createOrderInput, GetUserByIdInput getUserByIdInput, GenerateUserActivityReportPDFInput generateUserActivityReportPDFInput,
-                          RegisterUserInput registerUserInput, LoginUserInput loginUserInput,CreateProjectInput createProjectInput,CreateTaskInput createTaskInput) {
+                          RegisterUserInput registerUserInput, LoginUserInput loginUserInput,CreateProjectInput createProjectInput,CreateTaskInput createTaskInput, GetTasksByProjectInput getTasksByProjectInput) {
 
         this.createOrderInput = createOrderInput;
         this.getUserByIdInput = getUserByIdInput;
@@ -35,6 +39,7 @@ public class ControllerUser {
         this.loginUserInput = loginUserInput;
         this.createProjectInput=createProjectInput;
         this.createTaskInput=createTaskInput;
+        this.getTasksByProjectInput=getTasksByProjectInput;
     }
 
     @PostMapping("/{id}/orders")
@@ -126,6 +131,16 @@ public class ControllerUser {
                     request.getFinishedAt(),
                     request.getCreatedAt(), request.getTitle());
             return ResponseEntity.ok(TaskResponse.fromDomainTask(task));
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    @GetMapping("/{projectId}/tasks")
+    public ResponseEntity<?> findTaskByStatus (@PathVariable Long projectId) {
+        try {
+            List<Task> tasks = getTasksByProjectInput.getTasksByProject(projectId);
+            List<TaskResponse> response = tasks.stream().map(TaskResponse::fromDomainTask).toList();
+            return ResponseEntity.ok(response);
         }catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

@@ -8,6 +8,10 @@ import com.undec.persistence.until.TaskMapper;
 import model.Task;
 import org.springframework.stereotype.Repository;
 import output.TaskRepository;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Repository
 public class TaskRepositoryImpl implements TaskRepository {
 
@@ -29,5 +33,13 @@ public class TaskRepositoryImpl implements TaskRepository {
         TaskData saved = taskRepositoryCrud.save(data);
         return TaskMapper.mapToTaskDomain(saved);
 
+    }
+
+    @Override
+    public List<Task> findTasksByProject(Long projectId) {
+       return taskRepositoryCrud.findByProject_Id(projectId).
+                stream().
+                map(TaskMapper::mapToTaskDomain).
+                collect(Collectors.toList());
     }
 }

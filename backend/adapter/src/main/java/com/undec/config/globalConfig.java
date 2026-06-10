@@ -48,4 +48,9 @@ public class globalConfig {
     public CreateTaskInput createTaskUseCase(Clock clock, ProjectRepository projectRepository , TaskRepository taskRepository) {
         return new CreateTaskUseCase(clock,projectRepository,taskRepository);
     }
+    @Bean
+    public GetTasksByProjectInputUseCase getTasksByProjectInputUseCase(ProjectRepository projectRepository , TaskRepository taskRepository) {
+        return new GetTasksByProjectInputUseCase(projectRepository,taskRepository);
+    }
+
 }
