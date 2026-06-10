@@ -1,0 +1,118 @@
+<div class="min-vh-100">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+
+            <!-- Estado: Formulario de Creación -->
+            <div *ngIf="estado() === 'formulario'" class="fade-in">
+              <h2 class="card-title">Crear Nuevo Proyecto</h2>
+              <p class="subtitle">Completa los campos para crear un nuevo proyecto</p>
+
+              <form [formGroup]="formulario" (ngSubmit)="crearProyecto()">
+                <!-- Nombre del Proyecto -->
+                <div class="mb-3">
+                  <label for="name" class="form-label">Nombre del Proyecto</label>
+                  <input
+                    type="text"
+                    id="name"
+                    class="form-control"
+                    [class.is-invalid]="tieneErrorNombre()"
+                    formControlName="name"
+                    placeholder="Ej: Sistema de Gestión Académica"
+                    [disabled]="cargando()"
+                  />
+                  <div class="invalid-feedback" *ngIf="tieneErrorNombre()">
+                    <span *ngIf="formulario.get('name')?.errors?.['required']">
+                      El nombre es requerido
+                    </span>
+                    <span *ngIf="formulario.get('name')?.errors?.['minlength']">
+                      El nombre debe tener al menos 3 caracteres
+                    </span>
+                    <span *ngIf="formulario.get('name')?.errors?.['maxlength']">
+                      El nombre no puede exceder 100 caracteres
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Descripción -->
+                <div class="mb-4">
+                  <label for="description" class="form-label">Descripción</label>
+                  <textarea
+                    id="description"
+                    class="form-control"
+                    [class.is-invalid]="tieneErrorDescripcion()"
+                    formControlName="description"
+                    placeholder="Describe el propósito de tu proyecto"
+                    rows="4"
+                    [disabled]="cargando()"
+                  ></textarea>
+                  <div class="invalid-feedback" *ngIf="tieneErrorDescripcion()">
+                    <span *ngIf="formulario.get('description')?.errors?.['required']">
+                      La descripción es requerida
+                    </span>
+                    <span *ngIf="formulario.get('description')?.errors?.['maxlength']">
+                      La descripción no puede exceder 500 caracteres
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Botón Crear Proyecto -->
+                <button
+                  type="submit"
+                  class="btn btn-primary mb-3 btn-margin"
+                  [disabled]="cargando() || formulario.invalid"
+                >
+                  <span *ngIf="!cargando()">Crear Proyecto</span>
+                  <span *ngIf="cargando()">
+                    <span class="spinner-border-sm"></span>
+                    Creando...
+                  </span>
+                </button>
+              </form>
+
+              <!-- Enlace para volver -->
+              <p class="text-center text-muted small mt-4">
+                <a href="/proyectos">Volver a mis proyectos</a>
+              </p>
+            </div>
+
+            <!-- Estado: Éxito -->
+            <div *ngIf="estado() === 'exito'" class="text-center fade-in">
+              <div class="success-icon">✓</div>
+              <h2 class="card-title mb-2">¡Proyecto Creado!</h2>
+              <p class="text-muted">
+                Tu proyecto fue creado correctamente.
+              </p>
+              <p class="text-muted small mt-2">
+                Serás redirigido a tus proyectos en breve...
+              </p>
+            </div>
+
+            <!-- Estado: Error -->
+            <div *ngIf="estado() === 'error'" class="text-center fade-in">
+              <div class="alert alert-danger mb-4">
+                <strong>Error al crear el proyecto</strong>
+                <p class="mt-2">{{ mensajeError() }}</p>
+              </div>
+              <button
+                type="button"
+                class="btn btn-primary"
+                (click)="volverAlFormulario()"
+              >
+                Intentar de Nuevo
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer-text">
+          <p>Gestiona tus proyectos y tareas de forma eficiente</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
