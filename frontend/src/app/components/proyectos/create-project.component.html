@@ -21,7 +21,7 @@
                     [class.is-invalid]="tieneErrorNombre()"
                     formControlName="name"
                     placeholder="Ej: Sistema de Gestión Académica"
-                    [disabled]="cargando()"
+                  
                   />
                   <div class="invalid-feedback" *ngIf="tieneErrorNombre()">
                     <span *ngIf="formulario.get('name')?.errors?.['required']">
@@ -46,7 +46,7 @@
                     formControlName="description"
                     placeholder="Describe el propósito de tu proyecto"
                     rows="4"
-                    [disabled]="cargando()"
+                  
                   ></textarea>
                   <div class="invalid-feedback" *ngIf="tieneErrorDescripcion()">
                     <span *ngIf="formulario.get('description')?.errors?.['required']">
@@ -62,7 +62,7 @@
                 <button
                   type="submit"
                   class="btn btn-primary mb-3 btn-margin"
-                  [disabled]="cargando() || formulario.invalid"
+                  [disabled]="cargando()"
                 >
                   <span *ngIf="!cargando()">Crear Proyecto</span>
                   <span *ngIf="cargando()">
@@ -95,15 +95,7 @@
               <div class="alert alert-danger mb-4">
                 <strong>Error al crear el proyecto</strong>
                 <p class="mt-2">{{ mensajeError() }}</p>
-              </div>
-              <button
-                type="button"
-                class="btn btn-primary"
-                (click)="volverAlFormulario()"
-              >
-                Intentar de Nuevo
-              </button>
-            </div>
+               </div>
 
           </div>
         </div>

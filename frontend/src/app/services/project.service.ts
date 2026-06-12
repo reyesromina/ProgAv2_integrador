@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface CreateProjectRequest {
   name: string;
   description: string;
-  projectStatus?: string;
+  
 }
 
 export interface ProjectResponse {
@@ -21,14 +21,14 @@ export interface ProjectResponse {
 export class ProjectService {
   private apiUrl = 'http://localhost:8080';
 
-  constructor(private http: HttpClient) {}
+  private http = inject(HttpClient);
 
   createProject(name: string, description: string): Observable<ProjectResponse> {
     const request: CreateProjectRequest = {
       name,
       description,
-      projectStatus: 'ACTIVE'
+      
     };
-    return this.http.post<ProjectResponse>(`${this.apiUrl}/users/Project`, request);
+    return this.http.post<ProjectResponse>(`${this.apiUrl}/users/project`, request);
   }
 }

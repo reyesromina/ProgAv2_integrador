@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, signal, computed } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, signal, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -16,10 +16,18 @@ type CreateProjectState = 'formulario' | 'exito' | 'error';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateProjectComponent implements OnInit {
+
+private fb = inject(FormBuilder);
+private projectService = inject(ProjectService);
+private toastService = inject(ToastService);
+private router = inject(Router);
+
   formulario!: FormGroup;
   estado = signal<CreateProjectState>('formulario');
   cargando = signal(false);
   mensajeError = signal('');
+  
+
 
   tieneErrorNombre = computed(() => {
     const control = this.formulario.get('name');
@@ -31,12 +39,7 @@ export class CreateProjectComponent implements OnInit {
     return control ? control.invalid && control.touched : false;
   });
 
-  constructor(
-    private fb: FormBuilder,
-    private projectService: ProjectService,
-    private toastService: ToastService,
-    private router: Router
-  ) {}
+  
 
   ngOnInit(): void {
     this.inicializarFormulario();
@@ -56,6 +59,7 @@ export class CreateProjectComponent implements OnInit {
     }
 
     this.cargando.set(true);
+    this.formulario.disable();
     this.mensajeError.set('');
 
     const { name, description } = this.formulario.value;
@@ -63,27 +67,27 @@ export class CreateProjectComponent implements OnInit {
     this.projectService.createProject(name, description).subscribe({
       next: () => {
         this.cargando.set(false);
+      
         this.toastService.success('Proyecto creado exitosamente');
-        this.formulario.reset();
+      
         this.estado.set('exito');
+      
         setTimeout(() => {
           this.router.navigate(['/proyectos']);
         }, 2000);
       },
       error: (error) => {
-        this.cargando.set(false);
-        this.mensajeError.set(this.extraerMensajeError(error));
-        this.toastService.error(this.extraerMensajeError(error));
-      }
+       this.cargando.set(false);
+       this.formulario.enable();
+       this.estado.set('error');         
+       const mensaje = this.extraerMensajeError(error);
+       this.mensajeError.set(mensaje);
+       this.toastService.error(mensaje);
+}
     });
   }
 
-  volverAlFormulario(): void {
-    this.estado.set('formulario');
-    this.formulario.reset();
-    this.mensajeError.set('');
-    this.router.navigate(['/proyectos']);
-  }
+ 
 
   private marcarCamposComoTocados(): void {
     Object.keys(this.formulario.controls).forEach(key => {
