@@ -19,13 +19,13 @@
 
             <div
               class="invalid-feedback"
-              *ngIf="emailControl.touched && emailControl.invalid">
+              *ngIf="emailInvalid()">
 
-              <div *ngIf="emailControl.errors?.['required']">
+              <div *ngIf="emailRequiredError()">
                 El email es obligatorio.
               </div>
 
-              <div *ngIf="emailControl.errors?.['email']">
+              <div *ngIf="emailRequiredError()">
                 Ingrese un email válido.
               </div>
 
@@ -43,9 +43,9 @@
 
             <div
               class="invalid-feedback"
-              *ngIf="passwordControl.touched && passwordControl.invalid">
+               *ngIf="passwordInvalid()">
 
-              <div *ngIf="passwordControl.errors?.['required']">
+              <div *ngIf="passwordRequiredError()">
                 La contraseña es obligatoria.
               </div>
 
@@ -53,9 +53,9 @@
           </div>
 
           <button
-            type="submit"
-            class="btn btn-primary"
-            [disabled]="form.invalid">
+       type="submit"
+  class="btn btn-primary"
+  [disabled]="isFormInvalid()">
 
             Ingresar
 

@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
@@ -15,23 +15,26 @@ import { Router } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent {
+
 private readonly fb = inject(FormBuilder);
+private readonly auth = inject(AuthService);
+private readonly tokenService = inject(TokenService);
+private readonly toast = inject(ToastService);
+private readonly router = inject(Router);
   form = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required]]
   });
 
-  // expose controls as properties to avoid calling methods in template
-  emailControl = this.form.get('email') as FormControl;
-  passwordControl = this.form.get('password') as FormControl;
+  emailInvalid       = computed(() => !!this.form.get('email')?.touched && !!this.form.get('email')?.invalid);
+emailRequiredError = computed(() => !!this.form.get('email')?.touched && !!this.form.get('email')?.errors?.['required']);
+emailFormatError   = computed(() => !!this.form.get('email')?.touched && !!this.form.get('email')?.errors?.['email']);
 
-  constructor(
+passwordInvalid       = computed(() => !!this.form.get('password')?.touched && !!this.form.get('password')?.invalid);
+passwordRequiredError = computed(() => !!this.form.get('password')?.touched && !!this.form.get('password')?.errors?.['required']);
 
-    private auth: AuthService,
-    private tokenService: TokenService,
-    private toast: ToastService,
-    private router: Router
-  ) {}
+isFormInvalid = computed(() => this.form.invalid);
+  
 
   login(): void {
     if (this.form.invalid) {

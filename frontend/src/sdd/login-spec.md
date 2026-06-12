@@ -4,7 +4,7 @@
 Permitir a los usuarios registrados autenticarse en la aplicación mediante sus credenciales (email y contraseña). Una vez validado por el backend, el sistema deberá almacenar los tokens de acceso de forma segura en el cliente y redirigir al usuario a la vista principal del sistema.
 
 ## 2. Endpoints Involucrados
-* **Autenticar Usuario:** `POST http://localhost:8080/api/users/login`
+* **Autenticar Usuario:** `POST http://localhost:8080/users/login`
   * **Payload (Input):**
     ```json
     {
