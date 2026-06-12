@@ -29,6 +29,6 @@ export class ProjectService {
       description,
       projectStatus: 'ACTIVE'
     };
-    return this.http.post<ProjectResponse>(`${this.apiUrl}/users/projects`, request);
+    return this.http.post<ProjectResponse>(`${this.apiUrl}/users/Project`, request);
   }
 }

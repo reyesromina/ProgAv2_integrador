@@ -14,7 +14,7 @@ export const routes: Routes = [
 	},
 	{
 		path: 'proyectos',
-		loadComponent: () => import('./components/proyectos/proyectos.component').then(m => m.ProyectosComponent)
+		loadComponent: () => import('./components/proyectos/create-project.component').then(m => m.CreateProjectComponent)
 	},
 	{ path: '**', redirectTo: 'login' }
 ];
