@@ -21,12 +21,13 @@ private readonly auth = inject(AuthService);
 private readonly tokenService = inject(TokenService);
 private readonly toast = inject(ToastService);
 private readonly router = inject(Router);
+
   form = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required]]
   });
 
-  emailInvalid       = computed(() => !!this.form.get('email')?.touched && !!this.form.get('email')?.invalid);
+emailInvalid       = computed(() => !!this.form.get('email')?.touched && !!this.form.get('email')?.invalid);
 emailRequiredError = computed(() => !!this.form.get('email')?.touched && !!this.form.get('email')?.errors?.['required']);
 emailFormatError   = computed(() => !!this.form.get('email')?.touched && !!this.form.get('email')?.errors?.['email']);
 
@@ -42,9 +43,9 @@ isFormInvalid = computed(() => this.form.invalid);
       return;
     }
 
-
     const email = this.form.value.email || '';
     const password = this.form.value.password || '';
+    
     this.auth.login(email, password).subscribe({
       next: (res) => {
         try {
