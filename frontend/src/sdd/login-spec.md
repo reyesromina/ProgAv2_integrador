@@ -32,8 +32,8 @@ Permitir a los usuarios registrados autenticarse en la aplicación mediante sus 
 ## 4. Lineamientos Técnicos Esenciales (Angular)
 * **Componente:** Standalone `LoginComponent` con `ChangeDetectionStrategy.OnPush`.
 * **Formularios:** `ReactiveFormsModule` usando `FormBuilder`.
-* **Optimización de UI:** No invocar funciones directas en el template HTML para revisar errores. Usar `Signals` o propiedades booleanas computadas para controlar la validez de los campos cuando fueron tocados (`invalid && touched`).
-* **Feedback:** Mostrar alertas usando el `ToastService` existente tanto para errores de autenticación como para éxito.
+* **Optimización de UI:** No invocar `this.form.get(...)` directamente en el template. Exponer la validez mediante propiedades `computed()` que reflejen `invalid && touched`. Dado que `FormGroup` (RxJS) no notifica a las Signals automáticamente, sincronizar el estado del formulario con `toSignal()` sobre `valueChanges`/`statusChanges`, y disparar el recálculo de `touched` mediante un evento `(blur)` en los campos.
+* **Feedback:** Mostrar alertas usando el `ToastService` tanto para errores de autenticación como para éxito.
 
 ## 5. Criterios de Aceptación (Gherkin)
 * **Escenario 1: Inicio de sesión exitoso**
