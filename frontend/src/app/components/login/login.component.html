@@ -15,17 +15,18 @@
               id="email"
               type="email"
               class="form-control"
-              formControlName="email">
-
+              formControlName="email"
+              [class.is-invalid]="emailInvalid()"
+               (blur)="onBlur()">
             <div
               class="invalid-feedback"
-              *ngIf="emailInvalid()">
+              *ngIf="emailInvalid">
 
               <div *ngIf="emailRequiredError()">
                 El email es obligatorio.
               </div>
 
-              <div *ngIf="emailRequiredError()">
+              <div *ngIf="emailFormatError()">
                 Ingrese un email válido.
               </div>
 
@@ -39,8 +40,9 @@
               id="password"
               type="password"
               class="form-control"
-              formControlName="password">
-
+              formControlName="password"
+             [class.is-invalid]="passwordInvalid()"
+              (blur)="onBlur()">
             <div
               class="invalid-feedback"
                *ngIf="passwordInvalid()">
