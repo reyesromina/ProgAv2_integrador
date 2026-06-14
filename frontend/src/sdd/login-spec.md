@@ -44,3 +44,28 @@ Permitir a los usuarios registrados autenticarse en la aplicación mediante sus 
   * **Dado que** el usuario ingresa un correo o contraseña que no coinciden en el sistema.
   * **Cuando** envía el formulario.
   * **Entonces** el backend devuelve un 401 y el frontend muestra un Toast de peligro con el mensaje "Credenciales incorrectas".
+
+
+ **Escenarios alternativos : Inicio de sesión**
+ # Escenarios que faltaban
+**Escenario 3: Email con formato inválido**
+  **Dado que** el usuario ingresa "abc" en el campo email
+  **Cuando** abandona el campo email
+  **Entonces** ve el mensaje "Ingrese un email válido"
+  Y el botón de login permanece deshabilitado
+
+**Escenario 4: Email vacío al intentar enviar**
+  **Dado que** el usuario deja el campo email vacío
+  **Cuando** intenta hacer clic en el botón de login
+  **Entonces** ve el mensaje "El email es obligatorio"
+ Y el botón de login permanece deshabilitado
+**Escenario 5: Contraseña vacía al intentar enviar**
+  **Dado que** el usuario deja el campo contraseña vacío
+  **Cuando** intenta hacer en el botón de login
+  Entonces ve el mensaje "La contraseña es obligatoria"
+Y el botón de login permanece deshabilitado
+**Escenario 6: Formulario sin errores visibles al cargar**
+  **Dado que** el usuario accede a la pantalla de login
+  **Cuando** no ha interactuado con ningún campo
+  **Entonces** no ve ningún mensaje de error
+  
