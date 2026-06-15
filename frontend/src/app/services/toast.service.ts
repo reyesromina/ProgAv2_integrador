@@ -12,4 +12,13 @@ export class ToastService {
     console.error('[Toast] error:', message);
     try { window.alert(message); } catch {}
   }
+
+  showSuccess(message: string): void {
+    this.success(message);
+  }
+
+  showError(message: string): void {
+    this.error(message);
+  }
 }
+
