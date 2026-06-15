@@ -16,16 +16,20 @@ setTokens(accessToken: string, refreshToken: string): void {
   }
 }
 
-  getAccessToken(): string | null {
-    return localStorage.getItem(this.ACCESS_KEY);
-  }
+  private get storage(): Storage | null {
+  return typeof localStorage !== 'undefined' ? localStorage : null;
+}
 
-  getRefreshToken(): string | null {
-    return localStorage.getItem(this.REFRESH_KEY);
-  }
+getAccessToken(): string | null {
+  return this.storage?.getItem(this.ACCESS_KEY) ?? null;
+}
 
-  clearTokens(): void {
-    localStorage.removeItem(this.ACCESS_KEY);
-    localStorage.removeItem(this.REFRESH_KEY);
-  }
+getRefreshToken(): string | null {
+  return this.storage?.getItem(this.REFRESH_KEY) ?? null;
+}
+
+clearTokens(): void {
+  this.storage?.removeItem(this.ACCESS_KEY);
+  this.storage?.removeItem(this.REFRESH_KEY);
+}
 }
