@@ -8,6 +8,10 @@ import com.undec.persistence.until.UserMapper;
 import model.Project;
 import org.springframework.stereotype.Repository;
 import output.ProjectRepository;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Repository
 public class ProjectRepositoryImpl implements ProjectRepository {
 
@@ -34,4 +38,13 @@ public class ProjectRepositoryImpl implements ProjectRepository {
                 .map(ProjectMapper::mapToProjectDomain)
                 .orElse(null);
     }
+
+    @Override
+    public List<Project> findAllProjects(Long user_id) {
+        return projectRepositoryCrud.findByUser_Id(user_id).
+                stream().
+                map(ProjectMapper::mapToProjectDomain).
+                collect(Collectors.toList());
+    }
+
 }

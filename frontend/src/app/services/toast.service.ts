@@ -1,15 +1,25 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({ providedIn: 'root' })
+
 export class ToastService {
+  private readonly toastr = inject(ToastrService);
+
   success(message: string): void {
-    // Minimal implementation: replace with your UI toast integration
-    console.log('[Toast] success:', message);
-    try { window.alert(message); } catch {}
+    this.toastr.success(message);
   }
 
   error(message: string): void {
-    console.error('[Toast] error:', message);
-    try { window.alert(message); } catch {}
+    this.toastr.error(message);
+  }
+
+  showSuccess(message: string): void {
+    this.success(message);
+  }
+
+  showError(message: string): void {
+    this.error(message);
   }
 }
+

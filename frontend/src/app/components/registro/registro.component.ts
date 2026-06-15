@@ -1,10 +1,11 @@
-import { Component, OnInit, ChangeDetectionStrategy, signal, computed } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, signal, computed, inject, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UsuarioService } from '../../services/usuario.service';
+import { TokenService } from '../../services/token.service';
 
-type RegistroState = 'formulario' | 'validacion-codigo' | 'exito' | 'error';
+type RegistroState = 'formulario' | 'exito' | 'error';
 
 @Component({
   selector: 'app-registro',
@@ -12,14 +13,19 @@ type RegistroState = 'formulario' | 'validacion-codigo' | 'exito' | 'error';
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './registro.component.html',
   styleUrls: ['./registro.component.css'],
+  encapsulation: ViewEncapsulation.ShadowDom, 
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RegistroComponent implements OnInit {
+  private fb = inject(FormBuilder);
+  private usuarioService = inject(UsuarioService);
+  private tokenService = inject(TokenService);
+  private router = inject(Router);
+
   formulario!: FormGroup;
   estado = signal<RegistroState>('formulario');
   cargando = signal(false);
   mensajeError = signal('');
-  emailRegistrado = signal('');
 
   tieneErrorEmail = computed(() => {
     const control = this.formulario.get('email');
@@ -30,17 +36,6 @@ export class RegistroComponent implements OnInit {
     const control = this.formulario.get('password');
     return control ? control.invalid && control.touched : false;
   });
-
-  tieneErrorCodigo = computed(() => {
-    const control = this.formulario.get('codigo');
-    return control ? control.invalid && control.touched : false;
-  });
-
-  constructor(
-    private fb: FormBuilder,
-    private usuarioService: UsuarioService,
-    private router: Router
-  ) {}
 
   ngOnInit(): void {
     this.inicializarFormulario();
@@ -64,45 +59,16 @@ export class RegistroComponent implements OnInit {
 
     const { email, password } = this.formulario.value;
 
-    this.usuarioService.registrarUsuario(email, password).subscribe({
-      next: () => {
-        this.cargando.set(false);
-        this.emailRegistrado.set(email);
-        this.estado.set('validacion-codigo');
-        this.formulario.reset();
-        this.inicializarFormularioValidacion();
-      },
-      error: (error) => {
-        this.cargando.set(false);
-        this.estado.set('error');
-        this.mensajeError.set(this.extraerMensajeError(error));
-      }
-    });
-  }
-
-  private inicializarFormularioValidacion(): void {
-    this.formulario = this.fb.group({
-      codigo: ['', [Validators.required, Validators.minLength(6)]]
-    });
-  }
-
-  verificarCodigo(): void {
-    if (this.formulario.invalid) {
-      this.marcarCamposComoTocados();
-      return;
-    }
-
-    this.cargando.set(true);
-    this.mensajeError.set('');
-
-    const { codigo } = this.formulario.value;
-
-    this.usuarioService.verificarCodigo(this.emailRegistrado(), codigo).subscribe({
-      next: () => {
+    this.usuarioService.registerUser(email, password).subscribe({
+      next: (response) => {
+        this.tokenService.setTokens(
+          response.accessToken,
+          response.refreshToken
+        );
         this.cargando.set(false);
         this.estado.set('exito');
         setTimeout(() => {
-          this.router.navigate(['/login/user']);
+          this.router.navigate(['/login']);
         }, 2000);
       },
       error: (error) => {
@@ -116,7 +82,6 @@ export class RegistroComponent implements OnInit {
   volverAlFormulario(): void {
     this.estado.set('formulario');
     this.inicializarFormulario();
-    this.formulario.reset();
     this.mensajeError.set('');
   }
 
