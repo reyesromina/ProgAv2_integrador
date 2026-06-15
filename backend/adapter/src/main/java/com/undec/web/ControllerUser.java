@@ -28,9 +28,9 @@ public class ControllerUser {
     private final CreateProjectInput createProjectInput;
     private final CreateTaskInput createTaskInput;
     private final GetTasksByProjectInput getTasksByProjectInput;
-
+    private final GetProjectsInput getProjectsInput;
     public ControllerUser(CreateOrderInput createOrderInput, GetUserByIdInput getUserByIdInput, GenerateUserActivityReportPDFInput generateUserActivityReportPDFInput,
-                          RegisterUserInput registerUserInput, LoginUserInput loginUserInput,CreateProjectInput createProjectInput,CreateTaskInput createTaskInput, GetTasksByProjectInput getTasksByProjectInput) {
+                          RegisterUserInput registerUserInput, LoginUserInput loginUserInput, CreateProjectInput createProjectInput, CreateTaskInput createTaskInput, GetTasksByProjectInput getTasksByProjectInput, GetProjectsInput getProjectsInput) {
 
         this.createOrderInput = createOrderInput;
         this.getUserByIdInput = getUserByIdInput;
@@ -40,6 +40,7 @@ public class ControllerUser {
         this.createProjectInput=createProjectInput;
         this.createTaskInput=createTaskInput;
         this.getTasksByProjectInput=getTasksByProjectInput;
+        this.getProjectsInput = getProjectsInput;
     }
 
     @PostMapping("/{id}/orders")
@@ -145,5 +146,19 @@ public class ControllerUser {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @GetMapping("/{userId}/projects")
+    public ResponseEntity<?> findAllProjects(@PathVariable Long userId) {
+        try {
+            List<Project> projects = getProjectsInput.getProjects(userId);
+            List<ProjectResponse> response = projects.stream()
+                    .map(ProjectResponse::fromDomainProject)
+                    .toList();
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 
 }

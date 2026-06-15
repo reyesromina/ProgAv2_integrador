@@ -53,4 +53,9 @@ public class globalConfig {
         return new GetTasksByProjectInputUseCase(projectRepository,taskRepository);
     }
 
+    @Bean
+    public GetProjectsUseCase getProjectsUseCase(ProjectRepository projectRepository , UserRepository userRepository) {
+        return new GetProjectsUseCase(userRepository,projectRepository);
+    }
+
 }
