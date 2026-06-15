@@ -57,7 +57,7 @@ public class RegisterUserUseCase implements RegisterUserInput {
     //    System.out.println("Generando refresh token");
         String refreshToken = tokenService.generateRefreshToken(savedUser);
     //    System.out.println("Refresh token generado");
-        TokenResponse tokenResponse = new TokenResponse(accessToken, refreshToken);
+        TokenResponse tokenResponse = new TokenResponse(accessToken, refreshToken, savedUser.getId());
 
         return tokenResponse;
     }

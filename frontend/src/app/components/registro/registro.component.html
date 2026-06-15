@@ -21,7 +21,7 @@
                     [class.is-invalid]="tieneErrorEmail()"
                     formControlName="email"
                     placeholder="correo@ejemplo.com"
-                    [disabled]="cargando()"
+                    
                   />
                   <div class="invalid-feedback" *ngIf="tieneErrorEmail()">
                     <span *ngIf="formulario.get('email')?.errors?.['required']">
@@ -43,7 +43,7 @@
                     [class.is-invalid]="tieneErrorPassword()"
                     formControlName="password"
                     placeholder="Ingresa tu contraseña"
-                    [disabled]="cargando()"
+                    
                   />
                   <div class="invalid-feedback" *ngIf="tieneErrorPassword()">
                     <span *ngIf="formulario.get('password')?.errors?.['required']">
@@ -73,7 +73,7 @@
               </p>
             </div>
 
-            <!-- Nota: la verificación por código queda fuera de alcance según SPEC -->
+          
 
             <!-- Estado: Éxito -->
             <div *ngIf="estado() === 'exito'" class="text-center fade-in">
@@ -85,9 +85,7 @@
               <p class="text-muted small mt-2">
                 Puedes ir al login para iniciar sesión.
               </p>
-           <!---   <button class="btn btn-primary mt-3" (click)="goToLogin()">
-                Ir al Login
-              </button> / -->
+          
             </div>
 
             <!-- Estado: Error -->

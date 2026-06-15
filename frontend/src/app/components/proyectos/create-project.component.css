@@ -7,7 +7,6 @@
     background-color: #f3f4f6;
 }
 
-/* Contenedor limita el ancho */
 .container {
     width: 100%;
     max-width: 400px;
@@ -15,7 +14,6 @@
     box-sizing: border-box;
 }
 
-/* Tarjeta principal */
 .card {
     background-color: #ffffff;
     border-radius: 16px;
@@ -27,7 +25,6 @@
     padding: 40px 36px;
 }
 
-/* Títulos */
 .card-title {
     font-size: 1.6rem;
     font-weight: bold;
@@ -43,11 +40,6 @@
     font-size: 0.95rem;
 }
 
-/* Grupos de campos */
-.form-group {
-    margin-bottom: 20px;
-}
-
 .form-label {
     display: block;
     font-size: 0.9rem;
@@ -57,7 +49,6 @@
     letter-spacing: 0.3px;
 }
 
-/* Inputs */
 .form-control {
     display: block;
     width: 100%;
@@ -72,13 +63,21 @@
     outline: none;
 }
 
+textarea.form-control {
+    border-radius: 16px;
+    resize: vertical;
+}
+
 .form-control:focus {
     border-color: #4f46e5;
     background-color: #ffffff;
     box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.12);
 }
 
-/* Mensajes de error */
+.form-control.is-invalid {
+    border-color: #ef4444;
+}
+
 .invalid-feedback {
     margin-top: 6px;
     font-size: 0.82rem;
@@ -86,7 +85,6 @@
     padding-left: 12px;
 }
 
-/* Botón submit */
 .btn.btn-primary {
     display: block;
     width: 100%;
@@ -116,15 +114,38 @@
     box-shadow: 0 5px 10px rgba(79, 70, 229, 0.3);
 }
 
-/* Botón deshabilitado */
 .btn.btn-primary:disabled {
     background-color: #a5b4fc;
     box-shadow: none;
     cursor: not-allowed;
     opacity: 0.7;
 }
-.form-control.is-invalid {
-    border-color: #ef4444;
-    background-color: #fff5f5;
-    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+
+.success-icon {
+    width: 64px;
+    height: 64px;
+    background: #4f46e5;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+}
+
+.fade-in {
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.footer-text {
+    text-align: center;
+    color: #9ca3af;
+    font-size: 0.82rem;
+    margin-top: 16px;
 }

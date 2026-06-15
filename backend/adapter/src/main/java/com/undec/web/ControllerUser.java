@@ -109,7 +109,7 @@ public class ControllerUser {
         }
     }
 
-    @PostMapping("/Project")
+    @PostMapping("/project")
     public ResponseEntity<?> createOrder(@RequestHeader("Authorization") String authorizationHeader,@RequestBody ProjectRequest request) {
         try {
             String token = authorizationHeader.replace("Bearer ", "");
