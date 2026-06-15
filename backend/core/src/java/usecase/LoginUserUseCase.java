@@ -36,7 +36,7 @@ public class LoginUserUseCase implements LoginUserInput {
         String accessToken = tokenService.generateAccessToken(user);
         String refreshToken = tokenService.generateRefreshToken(user);
 
-        TokenResponse tokenResponse = new TokenResponse(accessToken, refreshToken);
+        TokenResponse tokenResponse = new TokenResponse(accessToken, refreshToken, user.getId());
         return tokenResponse;
     }
 }
