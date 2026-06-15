@@ -1,11 +1,12 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface CreateProjectRequest {
   name: string;
   description: string;
-  
+   projectStatus: 'ACTIVE';
 }
 
 export interface ProjectResponse {
@@ -19,16 +20,15 @@ export interface ProjectResponse {
   providedIn: 'root'
 })
 export class ProjectService {
-  private apiUrl = 'http://localhost:8080';
-
+ 
   private http = inject(HttpClient);
 
   createProject(name: string, description: string): Observable<ProjectResponse> {
     const request: CreateProjectRequest = {
       name,
       description,
-      
+       projectStatus: 'ACTIVE'
     };
-    return this.http.post<ProjectResponse>(`${this.apiUrl}/users/project`, request);
+    return this.http.post<ProjectResponse>(`${environment.apiUrl}/users/project`, request);
   }
 }
