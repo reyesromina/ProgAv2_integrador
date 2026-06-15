@@ -58,7 +58,7 @@ export class RegistroComponent implements OnInit {
 
     const { email, password } = this.formulario.value;
 
-    this.usuarioService.registrarUsuario(email, password).subscribe({
+    this.usuarioService.registerUser(email, password).subscribe({
       next: (response) => {
         this.tokenService.setTokens(
           response.accessToken,
