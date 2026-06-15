@@ -2,8 +2,8 @@ import { Component, OnInit, ChangeDetectionStrategy, signal, computed, inject } 
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ProjectService } from '../../services/project.service';
-import { ToastService } from '../../services/toast.service';
+import { ProjectService } from '../../../services/project.service';
+import { ToastService } from '../../../services/toast.service';
 
 type CreateProjectState = 'formulario' | 'exito' | 'error';
 
