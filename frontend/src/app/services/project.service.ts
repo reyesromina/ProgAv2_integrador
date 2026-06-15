@@ -31,4 +31,10 @@ export class ProjectService {
     };
     return this.http.post<ProjectResponse>(`${environment.apiUrl}/users/project`, request);
   }
+
+  getProjects(userId: number): Observable<ProjectResponse[]> {
+    return this.http.get<ProjectResponse[]>(
+      `${environment.apiUrl}/users/${userId}/projects`
+    );
+  }
 }

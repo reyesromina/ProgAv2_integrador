@@ -13,4 +13,13 @@ export class ToastService {
   error(message: string): void {
     this.toastr.error(message);
   }
+
+  showSuccess(message: string): void {
+    this.success(message);
+  }
+
+  showError(message: string): void {
+    this.error(message);
+  }
 }
+
