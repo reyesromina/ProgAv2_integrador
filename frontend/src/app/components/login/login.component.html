@@ -1,0 +1,71 @@
+<div class="min-vh-100">
+  <div class="container">
+    <div class="card">
+      <div class="card-body">
+
+        <h2 class="card-title">Iniciar Sesión</h2>
+        <p class="subtitle">Ingresa tus credenciales</p>
+
+        <form [formGroup]="form" (ngSubmit)="login()">
+
+          <div class="form-group">
+            <label class="form-label" for="email">Email</label>
+
+            <input
+              id="email"
+              type="email"
+              class="form-control"
+              formControlName="email"
+              [class.is-invalid]="emailInvalid()"
+               (blur)="onBlur()">
+            <div
+              class="invalid-feedback"
+              *ngIf="emailInvalid">
+
+              <div *ngIf="emailRequiredError()">
+                El email es obligatorio.
+              </div>
+
+              <div *ngIf="emailFormatError()">
+                Ingrese un email válido.
+              </div>
+
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="password">Contraseña</label>
+
+            <input
+              id="password"
+              type="password"
+              class="form-control"
+              formControlName="password"
+             [class.is-invalid]="passwordInvalid()"
+              (blur)="onBlur()">
+            <div
+              class="invalid-feedback"
+               *ngIf="passwordInvalid()">
+
+              <div *ngIf="passwordRequiredError()">
+                La contraseña es obligatoria.
+              </div>
+
+            </div>
+          </div>
+
+          <button
+       type="submit"
+  class="btn btn-primary"
+  [disabled]="isFormInvalid()">
+
+            Ingresar
+
+          </button>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>

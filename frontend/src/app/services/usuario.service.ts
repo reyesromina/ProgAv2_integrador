@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface RegisterRequest {
   email: string;
@@ -25,14 +26,14 @@ export interface VerifyCodeResponse {
   providedIn: 'root'
 })
 export class UsuarioService {
-  private apiUrl = 'http://localhost:8080';
+  
 
   constructor(private http: HttpClient) {}
 
   // Nueva firma conforme al SPEC: retorna tokens en caso de éxito
   registerUser(email: string, password: string): Observable<RegisterResponse> {
     const request: RegisterRequest = { email, password };
-    return this.http.post<RegisterResponse>(`${this.apiUrl}/users/register`, request);
+    return this.http.post<RegisterResponse>(`${environment.apiUrl}/users/register`, request);
   }
 
   // Mantener compatibilidad con el nombre en español si otras partes lo usan
@@ -42,6 +43,6 @@ export class UsuarioService {
 
   verificarCodigo(email: string, code: string): Observable<VerifyCodeResponse> {
     const request: VerifyCodeRequest = { email, code };
-    return this.http.post<VerifyCodeResponse>(`${this.apiUrl}/users/verify-code`, request);
+    return this.http.post<VerifyCodeResponse>(`${environment.apiUrl}/users/verify-code`, request);
   }
 }
