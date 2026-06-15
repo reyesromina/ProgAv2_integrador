@@ -67,7 +67,7 @@ export class RegistroComponent implements OnInit {
         this.cargando.set(false);
         this.estado.set('exito');
         setTimeout(() => {
-          this.router.navigate(['/login/user']);
+          this.router.navigate(['/login']);
         }, 2000);
       },
       error: (error) => {
