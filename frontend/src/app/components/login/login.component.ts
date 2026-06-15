@@ -61,6 +61,9 @@ onBlur(): void {
       next: (res) => {
         try {
           this.tokenService.setTokens(res.accessToken, res.refreshToken);
+          localStorage.setItem('userId', String(res.userId));
+          //modificación temporal para guardar el userId, idealmente el backend debería
+          // incluirlo en el token o proporcionar un endpoint para obtenerlo después del login
         } catch (e) {
           console.error('Error saving tokens', e);
         }
