@@ -1,0 +1,130 @@
+/* Página completa centrada */
+.min-vh-100 {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f3f4f6;
+}
+
+/* Contenedor limita el ancho */
+.container {
+    width: 100%;
+    max-width: 400px;
+    padding: 0 16px;
+    box-sizing: border-box;
+}
+
+/* Tarjeta principal */
+.card {
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.card-body {
+    padding: 40px 36px;
+}
+
+/* Títulos */
+.card-title {
+    font-size: 1.6rem;
+    font-weight: bold;
+    text-align: center;
+    margin: 0 0 8px;
+    color: #1f2937;
+}
+
+.subtitle {
+    text-align: center;
+    color: #6b7280;
+    margin: 0 0 28px;
+    font-size: 0.95rem;
+}
+
+/* Grupos de campos */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 6px;
+    letter-spacing: 0.3px;
+}
+
+/* Inputs */
+.form-control {
+    display: block;
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 1rem;
+    color: #1f2937;
+    background-color: #f9fafb;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 50px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    outline: none;
+}
+
+.form-control:focus {
+    border-color: #4f46e5;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.12);
+}
+
+/* Mensajes de error */
+.invalid-feedback {
+    margin-top: 6px;
+    font-size: 0.82rem;
+    color: #ef4444;
+    padding-left: 12px;
+}
+
+/* Botón submit */
+.btn.btn-primary {
+    display: block;
+    width: 100%;
+    margin-top: 28px;
+    padding: 16px 36px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #ffffff;
+    background-color: #4f46e5;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 8px 15px rgba(79, 70, 229, 0.25);
+    transition: all 0.3s ease;
+}
+
+.btn.btn-primary:hover:not(:disabled) {
+    background-color: #4338ca;
+    box-shadow: 0 15px 20px rgba(79, 70, 229, 0.4);
+    transform: translateY(-3px);
+}
+
+.btn.btn-primary:active:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 10px rgba(79, 70, 229, 0.3);
+}
+
+/* Botón deshabilitado */
+.btn.btn-primary:disabled {
+    background-color: #a5b4fc;
+    box-shadow: none;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+.form-control.is-invalid {
+    border-color: #ef4444;
+    background-color: #fff5f5;
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+}

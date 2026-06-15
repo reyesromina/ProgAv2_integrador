@@ -26,6 +26,7 @@ export interface VerifyCodeResponse {
   providedIn: 'root'
 })
 export class UsuarioService {
+  
 
   constructor(private http: HttpClient) {}
 
