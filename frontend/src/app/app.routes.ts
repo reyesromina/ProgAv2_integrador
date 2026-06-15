@@ -1,18 +1,33 @@
+
+import { RegistroComponent } from './components/registro/registro.component';
+import { LoginComponent } from './components/login/login.component';
+import { StartComponent } from './components/start/start.component';
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },   // ← arranca en login
+  // Ruta inicial → Start
+  { path: '', redirectTo: 'start', pathMatch: 'full' },
 
+  // Start (pantalla de bienvenida)
+  {
+    path: 'start',
+    loadComponent: () => import('./components/start/start.component')
+      .then(m => m.StartComponent)
+  },
+
+  // Auth
   {
     path: 'login',
     loadComponent: () => import('./components/login/login.component')
       .then(m => m.LoginComponent)
   },
   {
-    path: 'registro',
+    path: 'register',
     loadComponent: () => import('./components/registro/registro.component')
       .then(m => m.RegistroComponent)
   },
+
+  // Proyectos
   {
     path: 'proyectos',
     loadComponent: () => import('./components/proyectos/proyect-list/proyectos-list.component')
@@ -29,5 +44,6 @@ export const routes: Routes = [
       .then(m => m.ProyectoDetalleComponent)
   },
 
-  { path: '**', redirectTo: 'login' }   // ← desconocido va a login
+  // Wildcard
+  { path: '**', redirectTo: 'start' }
 ];

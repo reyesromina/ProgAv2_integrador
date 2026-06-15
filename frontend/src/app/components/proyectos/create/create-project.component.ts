@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, signal, computed, inject } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, signal, computed, inject, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -13,6 +13,7 @@ type CreateProjectState = 'formulario' | 'exito' | 'error';
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './create-project.component.html',
   styleUrls: ['./create-project.component.css'],
+  encapsulation: ViewEncapsulation.ShadowDom ,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateProjectComponent implements OnInit {
