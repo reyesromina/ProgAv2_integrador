@@ -1,6 +1,6 @@
 # Generación de Frontend Angular
 
-Soy un desarrollador trainee de Angular 21 con experiencia en aplicaciones web.
+Soy un desarrollador de Angular 21 con experiencia en aplicaciones web.
 
 ## Contexto del sistema
 
